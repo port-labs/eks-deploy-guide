@@ -16,7 +16,7 @@ variable "cluster_version" {
   description = "Version of the EKS cluster"
   type        = string
   default     = "1.29"
-  
+
 }
 
 variable "port_run_id" {
