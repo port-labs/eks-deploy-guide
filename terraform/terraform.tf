@@ -31,9 +31,9 @@ terraform {
       version = "~> 2.3.2"
     }
 
-    port = {
+    port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 1.10.0"
+      version = "~> 2.0.0"
     }
   }
 
