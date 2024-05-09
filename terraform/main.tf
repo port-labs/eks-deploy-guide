@@ -122,7 +122,7 @@ resource "aws_eks_addon" "ebs-csi" {
 
 
 # Port resources
-resource "port_entity" "eks_cluster" {
+resource "port-labs_port_entity" "eks_cluster" {
   identifier = module.eks.cluster_arn
   title      = module.eks.cluster_name
   blueprint  = "eks"

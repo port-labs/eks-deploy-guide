@@ -30,13 +30,13 @@ terraform {
       source  = "hashicorp/cloudinit"
       version = "~> 2.3.2"
     }
-
     port-labs = {
       source  = "port-labs/port-labs"
-      version = "~> 2.0.0"
+      version = "2.0.0"
     }
   }
 
   required_version = "~> 1.3"
 }
+
 
