@@ -2,12 +2,13 @@
 # SPDX-License-Identifier: MPL-2.0
 
 terraform {
+  cloud {
+    organization = "TeKanAid"
 
-  # cloud {
-  #   workspaces {
-  #     name = "test"
-  #   }
-  # }
+    workspaces {
+      name = "Port-EKS-Self-Service-Demo"
+    }
+  }
 
   required_providers {
     aws = {
