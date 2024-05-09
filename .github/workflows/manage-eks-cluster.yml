@@ -72,7 +72,9 @@ jobs:
           TF_VAR_cluster_name: ${{ github.event.inputs.cluster_name }}
           TF_VAR_region: ${{ github.event.inputs.region }}
           TF_VAR_port_run_id: ${{ fromJson(inputs.port_payload).context.runId }}
-
+          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+          
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
         run: terraform destroy -auto-approve
