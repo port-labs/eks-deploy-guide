@@ -5,7 +5,7 @@ provider "aws" {
   region = var.region
 }
 
-provider "port-labs" {
+provider "port" {
 }
 
 # Filter out local zones, which are not currently supported 
