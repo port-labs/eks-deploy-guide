@@ -33,6 +33,7 @@
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "cluster_name": "{{.entity.properties.name}}",
+      "action": "destroy",
       "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}",
       "port_payload": {
         "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
