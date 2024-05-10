@@ -19,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # REPO_URL: ${{ fromJson(inputs.port_payload).payload.entity.properties.url }}
       REPO_URL: ${{ github.event.inputs.repo_url  }} 
       TRIGGERED_BY: ${{ fromJson(inputs.port_payload).trigger.by.user.email || github.actor }}
 
