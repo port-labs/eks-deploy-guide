@@ -35,8 +35,8 @@
     },
     "invocationMethod": {
       "type": "GITHUB",
-      "org": "samgabrail",
-      "repo": "port-eks-deploy-guide",
+      "org": "your_org_name",
+      "repo": "your_repo_name",
       "workflow": "manage-eks-cluster.yml",
       "workflowInputs": {
         "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
@@ -57,8 +57,8 @@
             "action": {
               "invocationMethod": {
                 "type": "GITHUB",
-                "org": "samgabrail",
-                "repo": "port-eks-deploy-guide",
+                "org": "your_org_name",
+                "repo": "your_repo_name",
                 "workflow": "manage-eks-cluster.yml",
                 "omitUserInputs": false,
                 "omitPayload": false,

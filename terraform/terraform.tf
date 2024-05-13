@@ -3,10 +3,10 @@
 
 terraform {
   cloud {
-    organization = "TeKanAid"
+    organization = "your_org_name"
 
     workspaces {
-      name = "Port-EKS-Self-Service-Demo"
+      name = "your_workspace_name"
     }
   }
 

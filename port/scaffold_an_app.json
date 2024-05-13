@@ -53,8 +53,8 @@
     },
     "invocationMethod": {
       "type": "GITHUB",
-      "org": "samgabrail",
-      "repo": "port-eks-deploy-guide",
+      "org": "your_org_name",
+      "repo": "your_repo_name",
       "workflow": "scaffold-app.yml",
       "workflowInputs": {
         "{{if (.inputs | has(\"project_name\")) then \"project_name\" else null end}}": "{{.inputs.\"project_name\"}}",
@@ -75,8 +75,8 @@
             "action": {
               "invocationMethod": {
                 "type": "GITHUB",
-                "org": "samgabrail",
-                "repo": "port-eks-deploy-guide",
+                "org": "your_org_name",
+                "repo": "your_repo_name",
                 "workflow": "scaffold-app.yml",
                 "omitUserInputs": false,
                 "omitPayload": false,
