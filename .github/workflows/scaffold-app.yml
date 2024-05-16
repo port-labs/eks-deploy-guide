@@ -10,14 +10,14 @@ on:
         description: "Slug of the app"
         required: true
       template:
-        description: "Template to use for the app"
-        required: false
-        default: "nodejs"
+          description: "Template to use for the app"
+          required: false
+          default: "nodejs"
       description:
         description: "Description of the app"
         required: true
         default: "A simple app"
-      port_payload:
+      context:
         required: true
         description: "Port's payload (who triggered, context, etc...)"
         type: string
@@ -27,8 +27,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-      PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+      PORT_RUN_ID: ${{ fromJson(github.event.inputs.context).runId }}
+      
 
     steps:
       - name: Create a log message (post-action)
@@ -38,7 +38,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Starting scaffolding of app: ${{ github.event.inputs.project_name }}"
 
       - name: Checkout code
@@ -49,7 +49,7 @@ jobs:
         run: |
           REPO_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" \
             -X GET \
-            -H "Authorization: Bearer ${{ secrets.CREATOR_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}")
            
           echo "HTTP Status: $REPO_EXISTS"
@@ -69,7 +69,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Creating ECR repository: ${{ github.event.inputs.repo_name }}"
 
       - name: Configure AWS credentials
@@ -112,7 +112,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Creating repository for app: ${{ github.event.inputs.project_name }}"
 
       - name: Create GitHub Repository
@@ -122,7 +122,7 @@ jobs:
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
             -X POST \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.CREATOR_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
             -d '{"name": "${{ github.event.inputs.repo_name }}", "private": true, "description": "${{ github.event.inputs.description }}"}' \
             "https://api.github.com/user/repos")
 
@@ -142,7 +142,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Commiting new app files: ${{ github.event.inputs.project_name }}"
 
       - name: Commit files
@@ -155,7 +155,7 @@ jobs:
           git add .
           git commit -m "Initial commit"
           git branch -M main
-          git remote add origin https://${{ github.repository_owner }}:${{ secrets.CREATOR_TOKEN }}@github.com/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}.git
+          git remote add origin https://${{ github.repository_owner }}:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}.git
           git push -u origin main
 
       - name: Create a log message (post-action)
@@ -166,5 +166,5 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Finished scaffolding of app: ${{ github.event.inputs.project_name }}"
