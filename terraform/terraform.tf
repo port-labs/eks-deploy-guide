@@ -2,12 +2,13 @@
 # SPDX-License-Identifier: MPL-2.0
 
 terraform {
+  cloud {
+    organization = "your_org_name"
 
-  # cloud {
-  #   workspaces {
-  #     name = "test"
-  #   }
-  # }
+    workspaces {
+      name = "your_workspace_name"
+    }
+  }
 
   required_providers {
     aws = {
@@ -29,13 +30,13 @@ terraform {
       source  = "hashicorp/cloudinit"
       version = "~> 2.3.2"
     }
-
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.10.0"
+      version = "2.0.0"
     }
   }
 
   required_version = "~> 1.3"
 }
+
 

@@ -4,7 +4,7 @@
 variable "region" {
   description = "AWS region"
   type        = string
-  default     = "eu-west-1"
+  default     = "us-east-1"
 }
 
 variable "cluster_name" {
@@ -16,7 +16,7 @@ variable "cluster_version" {
   description = "Version of the EKS cluster"
   type        = string
   default     = "1.29"
-  
+
 }
 
 variable "port_run_id" {
